@@ -16,7 +16,7 @@ Bidirectional Recurrent Neural Networks connect two hidden layers of opposite di
 
 Include the neural network model diagram.
 
-## DESIGN STEPS
+## DESIGN STEPS.
 
 ### STEP 1:
 Import the necessary packages.
