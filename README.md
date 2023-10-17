@@ -1,22 +1,22 @@
-# Named Entity Recognition
+# Named Entity Recognition :
 
-## AIM
+## AIM :
 
 To develop an LSTM-based model for recognizing the named entities in the text.
 
-## Problem Statement and Dataset
+## Problem Statement and Dataset :
 We aim to develop an LSTM-based neural network model using Bidirectional Recurrent Neural Networks for recognizing the named entities in the text.
 The dataset used has a number of sentences, and each words have their tags.
 We have to vectorize these words using Embedding techniques to train our model.
 Bidirectional Recurrent Neural Networks connect two hidden layers of opposite directions to the same output.
 
-![image](https://github.com/sanjay5656/named-entity-recognition/assets/115128955/7af2b680-c45f-4a8e-8e34-bd2c7548d6b7)
+![image](https://github.com/sanjay5656/named-entity-recognition/assets/115128955/1721d09a-796a-42f9-9cbd-08144ce977ae)
 
-## Neural Network Model
+## Neural Network Model :
 
-Include the neural network model diagram.
+![image](https://github.com/sanjay5656/named-entity-recognition/assets/115128955/9edb32a0-8fb3-49f4-a2dd-bf1f51d3cc7e)
 
-## DESIGN STEPS.
+## DESIGN STEPS :
 
 ### STEP 1:
 Import the necessary packages.
@@ -38,7 +38,7 @@ Developed by : Sanjay S
 
 Register no  : 212221243002
 ## Libraries :
-```python
+```
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -48,7 +48,7 @@ from keras.models import Model
 from tensorflow.keras.preprocessing import sequence
 ```
 ## Read & Pre-Process Data :
-```python
+```
 data = pd.read_csv("ner_dataset.csv", encoding="latin1")
 data.head(50)
 data = data.fillna(method="ffill")
@@ -61,7 +61,7 @@ tags=list(data['Tag'].unique())
 print("Unique tags are:", tags)
 ```
 ## Define Class to Get Sentance :
-```python
+```
 class SentenceGetter(object):
     def __init__(self, data):
         self.n_sent = 1
@@ -87,11 +87,9 @@ tag2idx = {t: i for i, t in enumerate(tags)}
 X1 = [[word2idx[w[0]] for w in s] for s in sentences]
 ```
 ## Padding :
-```python
+```
 nums = [[1], [2, 3], [4, 5, 6]]
-sequence.pad_sequences(nums)
 nums = [[1], [2, 3], [4, 5, 6]]
-sequence.pad_sequences(nums,maxlen=2)
 X = sequence.pad_sequences(maxlen=max_len,
                   sequences=X1, padding="post",
                   value=num_words-1)
@@ -103,7 +101,7 @@ y = sequence.pad_sequences(maxlen=max_len,
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1)
 ```
 ## LSTM Model :
-```python
+```
 input_word = layers.Input(shape=(max_len,))
 embedding_layer = layers.Embedding(input_dim=num_words,output_dim=50,
                                    input_length=max_len)(input_word)
@@ -124,14 +122,14 @@ history = model.fit(
 )
 ```
 ## Metrics :
-```python
+```
 metrics = pd.DataFrame(model.history.history)
 metrics.head()
 metrics[['accuracy','val_accuracy']].plot()
 metrics[['loss','val_loss']].plot()
 ```
 ## Prediction :
-```python
+```
 i = 2001
 p = model.predict(np.array([X_test[i]]))
 p = np.argmax(p, axis=-1)
@@ -143,13 +141,13 @@ for w, true, pred in zip(X_test[i], y_true, p[0]):
 ```
 ## OUTPUT :
 ## Training Loss, Validation Loss Vs Iteration :
-![image](https://github.com/sanjay5656/named-entity-recognition/assets/115128955/b4744923-3fc4-4ef5-8398-c2f3cde46ec0)
+![image](https://github.com/sanjay5656/named-entity-recognition/assets/115128955/d5886eab-a46f-4aa6-bf86-ba3a129c6f34)
 
 ## Accuracy, Validation Accuracy Vs Iteration :
-![image](https://github.com/sanjay5656/named-entity-recognition/assets/115128955/12da7ef1-4f06-4c05-8b13-c1b0277a05a4)
+![image](https://github.com/sanjay5656/named-entity-recognition/assets/115128955/2dc1524c-66dd-4ef8-871e-dc0308d1b05f)
 
 ### Sample Text Prediction :
-![image](https://github.com/sanjay5656/named-entity-recognition/assets/115128955/d7c41d73-38ce-423a-8f7a-9128e51481d4)
+![image](https://github.com/sanjay5656/named-entity-recognition/assets/115128955/629bca88-e6d5-480f-9947-77decf5ea089)
 
 ## RESULT :
 Thus, an LSTM-based model for recognizing the named entities in the text is successfully developed.
